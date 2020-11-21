@@ -1,9 +1,9 @@
 
-#Pac-Man Algorithm Script
+# Pac-Man Algorithm Script
 The project builds a Pac-Man AI script based on a variant of Dijkstra's algorithm.<br>
 The script is written in ai.c which is based on the heuristic.<br>
 
-##Program Execution
+## Program Execution
 To run the project, clone the repository and compile using the make file by the command: *make*
 
 <br>
@@ -17,9 +17,9 @@ where
 * <max=avg> is either max or avg, to select the 2 options for propagating scores
 * <budget> is an integer number indicating the budget of your search.
 
----
+___
 The code is injected to the Pac-Man game who is created by the original owner as below.
----
+___
 
 Pacman For Console
 ------------------
