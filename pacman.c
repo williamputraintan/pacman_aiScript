@@ -66,6 +66,12 @@ int Points = 0;                     //Initial points
 int Lives = 3;                      //Number of lives you start with
 int SpeedOfGame = 175;              //How much of a delay is in the game
 
+//For output.txt (the global variable is suggested by a tutor)
+int currDepth;
+int totalGenerated;
+int totalExpanded;
+clock_t timeStart, timeEnd;
+
 //Windows used by ncurses
 WINDOW * win;
 WINDOW * status;
@@ -123,7 +129,7 @@ int main(int argc, char *argv[100]) {
     CheckScreenSize();              //Make sure screen is big enough
     CreateWindows(29, 28, 1, 1);    //Create the main and status windows
 
-
+    
 
     if (argc > 2 ) {
         ai_run = true;
@@ -147,7 +153,9 @@ int main(int argc, char *argv[100]) {
         sscanf (argv[4],"%d",&budget);
 
     }
-
+    
+    timeStart = clock();           //time when game started
+    
     //If they specified a level to load
     if((argc > 1) && (strlen(argv[1]) > 1)) {
         argv[1][99] = '\0';
@@ -176,6 +184,7 @@ int main(int argc, char *argv[100]) {
         }
 
     }
+    
 
     //Game has ended, deactivate and end program
     ExitProgram(EXIT_MSG);
@@ -468,6 +477,31 @@ void DrawWindowState(state_t state) {
 void ExitProgram(const char *message) {
     endwin();                       //Uninitialize ncurses and destroy windows
     delscreen(mainScreen);
+    timeEnd = clock();             //time where game ends
+      
+    double total_t = ((double)(timeEnd - timeStart)) / CLOCKS_PER_SEC;
+    
+    //string to for textfile report
+    char prop_type[4];
+    if(propagation == max){
+        strcpy(prop_type , "Max");
+    } else {
+        strcpy(prop_type , "Min");;
+    }
+    
+    //Generating a textfile report
+    FILE *outputFile;
+    outputFile = fopen("output.txt", "w");
+    fprintf(outputFile, "Propagation=%s\n", prop_type);
+    fprintf(outputFile, "Budget=%d\n", budget);
+    fprintf(outputFile, "MaxDepth = %d\n", currDepth);
+    fprintf(outputFile, "TotalGenerated = %d\n", totalGenerated);
+    fprintf(outputFile, "TotalExpanded = %d\n", totalExpanded);
+    fprintf(outputFile, "Time = %.2f seconds\n", total_t);
+    fprintf(outputFile, "Expanded/Second = %d\n", (int)(totalExpanded/total_t));
+    fprintf(outputFile, "Score = %d\n", Points);
+    
+
     printf("%s\n", message);        //Display message
     printf("Final Score: %d\n",Points);
     exit(0);                        //End program, return 0
@@ -819,7 +853,7 @@ void MainLoop() {
             /**
              * ****** HERE IS WHERE YOUR SOLVER IS CALLED
              */
-            move_t selected_move = get_next_move( current_state, budget, propagation, ai_stats );
+            move_t selected_move = get_next_move( current_state, budget, propagation, ai_stats, &currDepth, &totalGenerated, &totalExpanded );
 
             /**
              * Execute the selected action
