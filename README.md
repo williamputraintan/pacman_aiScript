@@ -19,7 +19,7 @@ where
 
 ___
 # The code is injected to the Pac-Man game who is created by the original owner as below.
-___
+
 
 Pacman For Console
 ------------------
