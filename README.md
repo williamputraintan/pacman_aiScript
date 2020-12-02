@@ -18,9 +18,9 @@ where
 * <budget> is an integer number indicating the budget of your search.
 
 ___
-# The code is injected to the Pac-Man game who is created by the original owner as below.
+## The code is injected to the Pac-Man game who is created by the original owner as below.
 
-
+<br><br><br>
 Pacman For Console
 ------------------
 Okay, so basically, I got tired of enabling flash on my browser so that I could play Pacman.
