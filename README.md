@@ -18,7 +18,7 @@ where
 * <budget> is an integer number indicating the budget of your search.
 
 ___
-The code is injected to the Pac-Man game who is created by the original owner as below.
+# The code is injected to the Pac-Man game who is created by the original owner as below.
 ___
 
 Pacman For Console
